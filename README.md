@@ -105,6 +105,20 @@ Post Processing Options:
                         Default=True.
 ```
 
+> NeoPredPipe of current release can be deployed using an easy way, espcially in China. After installing `biopython` and `tcsh`, all you need is only a perl script [NeoPredPipe.install.pl](NeoPredPipe.install.pl). Using following command to install NeoPredPipe easily:
+
+```
+perl NeoPredPipe.install.pl -i $PWD/NeoPredPipe
+```
+
+then `$PWD/NeoPredPipe/NeoPredPipe.py` can be processed.
+
+To install NeoPredPipe using netMHCIIpan instead of netMHCpan for typeII neoantigen calling, following command can be used:
+
+```
+perl NeoPredPipe.install.pl -i $PWD/NeoPredPipe -type2
+```
+
 ## Input files
 1. VCF file(s). A standard vcf file with a patient identifier as the title of the .vcf. Several vcf files can be specified in the same directory.
 2. An hla file with the following tab delimited format:
