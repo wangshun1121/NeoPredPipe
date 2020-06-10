@@ -69,7 +69,7 @@ print O "gene_fasta = $path/NeoPredPipe/Tool/annovar/humandb/hg19_refGeneMrna.fa
 print O "humandb = $path/NeoPredPipe/Tool/annovar/humandb\n";
 print O "[netMHCpan]\n";
 if($typeII){
-    print O "netMHCpan = $path/NeoPredPipe/Tool/netMHCIIpan-4.0/netMHCIIpan\n";
+    print O "netMHCpan = $path/NeoPredPipe/Tool/netMHCIIpan-3.2/netMHCIIpan\n";
 }else{
     print O "netMHCpan = $path/NeoPredPipe/Tool/netMHCpan-4.0/netMHCpan\n";
 }
@@ -98,15 +98,15 @@ close O;
 
 # 配置文件3: netMHCIIpan的主文件
 $out=();
-open I,"<./NeoPredPipe/Tool/netMHCIIpan-4.0/netMHCIIpan";
+open I,"<./NeoPredPipe/Tool/netMHCIIpan-3.2/netMHCIIpan";
 while(<I>){
     if(m/setenv\tNMHOME\t/){
-        $_="setenv\tNMHOME\t$path/NeoPredPipe/Tool/netMHCIIpan-4.0\n";
+        $_="setenv\tNMHOME\t$path/NeoPredPipe/Tool/netMHCIIpan-3.2\n";
     }
     $out.=$_;
 }
 close I;
 
-open O,">./NeoPredPipe/Tool/netMHCIIpan-4.0/netMHCIIpan";
+open O,">./NeoPredPipe/Tool/netMHCIIpan-3.2/netMHCIIpan";
 print O $out;
 close O;
