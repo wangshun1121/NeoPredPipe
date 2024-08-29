@@ -42,3 +42,7 @@ python NeoPredViz.py -o NeoantigenVizDashboard.html -s SummaryTable.txt -n Neoan
 Finally, in order to visualize, open the output file (NeoantigenVizDashboard.html) with your preferred web browser. This file can also be shared as an html with others.
 
 It's possible to export these plots, but for this, please refer to [bokeh documentation](http://bokeh.pydata.org/). 
+
+### Troubleshooting:
+
+Updated versions and new machines (M1-4 Macs) might require different dependencies. If encountering issues, try the set-up detailed here: https://github.com/MathOnco/NeoPredPipe/issues/47#issue-2228443914
