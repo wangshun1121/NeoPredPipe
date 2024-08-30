@@ -41,6 +41,7 @@ class StandardPreds:
         self.filesToPredict = None
         self.epitopeLengths = None
         self.hasExpression = False # Boolean of whether the original predictions had expression information, default is false
+        self.ver41 = Options.ver41 # Indicate if netMHCpan 4.1 was used (default is False standing for version 4.0)
     def load(self):
         '''
         Loads the data class of neoantigen predictions to get the right information.
@@ -60,7 +61,7 @@ class StandardPreds:
         for line in lines:
             sam = line.split('\t')[0]
             if '<=' in line.split('\t'):
-                hla = line.split('\t')[-15] #According to netMHCpan output with -BA setting; TODO: make non-hardcoded version
+                hla = line.split('\t')[-15] #According to netMHCpan output with -BA setting
             else:
                 hla = line.split('\t')[-13]
             if hla not in self.hlas[sam]:
@@ -73,6 +74,7 @@ class StandardPreds:
     def __ensureFiltered(self, data):
         '''
         Ensures that neoantigens are <= 500nM binding affinity based on predictions.
+        Also brings lines to the format expected from netMHCpan 4.0 if version 4.1 was used
 
         :param data: lines from the input file.
         :return: filtered lines
@@ -86,12 +88,14 @@ class StandardPreds:
                 novel = int(line[-1])
                 line = line[0:-1]
             if line[len(line)-2]=='<=':
+                if self.ver41:
+                    line = line[:-7] + line[-5:-4] + line[-3:-2] + line[-4:-3] + line[-2:] # omit columns of Score_EL and %Rank_EL, swap Rank_BA and Aff columns
                 tmpLine = line[0:len(line)-2]
             else:
+                if self.ver41:
+                    line = line[:-5] + line[-3:-2] + line[-1:] + line[-2:-1] # omit columns of Score_EL and %Rank_EL, swap Rank_BA and Aff columns
                 tmpLine = line
             ba = float(tmpLine[len(tmpLine)-2])
-            refall = tmpLine[4]
-            altall = tmpLine[5]
             if ba <= 500.0 and novel==1:
                 dataOut.append('\t'.join(line))
 
@@ -323,8 +327,10 @@ class StandardPreds:
                 assert wtPred.split('\t')[2]==hla,"ERROR: HLA types do not match."
                 alignDiff = [1 for i in range(0,len(mutpeptide)) if mutpeptide[i] != wtPred.split('\t')[3][i]]
                 assert len(alignDiff)==1,"ERROR: Mismatched peptides between Wild Type and Mutant."
-
-                wtscore, wtpeptide = wtPred.split('\t')[13], wtPred.split('\t')[3]
+                if self.ver41:
+                    wtscore, wtpeptide = wtPred.split('\t')[16], wtPred.split('\t')[3]
+                else:
+                    wtscore, wtpeptide = wtPred.split('\t')[13], wtPred.split('\t')[3]
             else:
                 wtscore = "1000.0"
                 wtpeptide = "-"
