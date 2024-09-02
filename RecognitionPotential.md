@@ -20,6 +20,8 @@ Besides the dependencies outlined [here](README.md), the following are required 
 # Use 'python ./NeoRecoPo.py --help' to view the full list of options'. 
 
 python ./NeoRecoPo.py --neopred_in=<predictions from NeoPredPipe> --neoreco_out=<output.txt> --fastas=<directory of fasta files for samples created in previous step>
+# if running for indel mutations, specify it with the option --indel
+python ./NeoRecoPo.py --neopred_in=<indel predictions from NeoPredPipe> --neoreco_out=<output.txt> --fastas=<directory of fasta files for samples created in previous step> --indel
 ```
 
 ## Output
