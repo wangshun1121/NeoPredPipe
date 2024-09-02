@@ -6,7 +6,7 @@ Once the primary pipeline is ran, the user is then able to perform Neoantigen re
 To perform the neoantigen recognition potential please [click here](RecognitionPotential.md). Finally, you can visualize these predictions using [NeoPredViz](NeoPredViz.md).
 
 ### Updates
-**2024-09-01** Support for netMHCpan 4.1 is added to NeoRecoPo - now full pipeline can work and process the output of version 4.1.
+**2024-09-01** Support for netMHCpan 4.1 is added to NeoRecoPo - now full pipeline can work with and process the output of version 4.1. Simply specify the netMHCpan-4.1 binary in _usr_paths.ini_.
 
 ## Citation
 
