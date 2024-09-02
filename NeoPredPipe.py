@@ -92,8 +92,11 @@ class Sample():
         self.peptideFastas = None # Will be a dictionary of tmp files for predictions
         self.epcalls = None
         self.digestedEpitopes = None
+        self.digestedEpitopesIndels = None
         self.appendedEpitopes = None
+        self.appendedEpitopesIndels = None
         self.regionsPresent = None
+        self.regionsPresentIndels = None
         self.ProcessAnnovar(FilePath, annovar, Options)
         if Options.typeII:
             self.hlasnormed = ConstructAlleles_typeII(self.hla, FilePath, self.patID)
