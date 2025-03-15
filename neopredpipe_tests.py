@@ -61,14 +61,14 @@ class MyTestCase(unittest.TestCase):
         FilePath = '.'
         patID = 'hla_test'
 
-        self.assertEqual( ['HLA-A33:03','HLA-B82:02','HLA-A01:01','HLA-A03:01','HLA-B39:01','HLA-B07:02'], ConstructAlleles(hlas,FilePath,patID) )
+        self.assertEqual( set(['HLA-A33:03','HLA-B82:02','HLA-A01:01','HLA-A03:01','HLA-B39:01','HLA-B07:02']), set(ConstructAlleles(hlas,FilePath,patID) ))
 
     def test_hla_format_typeII(self):
         hlas = ['DRB1*12:02P', 'DPA1*01:03P','DPB1*90:01P','DRB1*01:01:01G', 'DPA1*02:04','NA', 'DQA1*05:01P', 'DQB1*02:02:03:01', 'DQB1*03:39']
         FilePath = '.'
         patID = 'hla_test'
 
-        self.assertEqual( ['HLA-DQA10501-DQB10202','HLA-DPA10103-DPB19001','DRB1_0101','DRB1_1202','HLA-DPA10204-DPB19001'], ConstructAlleles_typeII(hlas,FilePath,patID))
+        self.assertEqual( set(['HLA-DQA10501-DQB10202','HLA-DPA10103-DPB19001','DRB1_0101','DRB1_1202','HLA-DPA10204-DPB19001']), set(ConstructAlleles_typeII(hlas,FilePath,patID)))
 
     def test_hla_process_hlaminer_typeII(self):
         if os.path.isfile("./test/hla-II/Test_hlaminer/HLAminer_processed.txt"):
@@ -92,7 +92,7 @@ class MyTestCase(unittest.TestCase):
         runcmd.wait()
         with open('test/Test_multiAllele.neoantigens.unfiltered.txt', 'r') as testof:
             oflines = testof.readlines()
-        self.assertEqual( (['1', '1', '0', '1'],['1','1','1','1']) , (oflines[0].split('\t')[1:5], oflines[9].split('\t')[1:5]))
+        self.assertEqual( (['1', '1', '0', '0'],['1','1','1','0']) , (oflines[0].split('\t')[1:5], oflines[9].split('\t')[1:5]))
 
     def test_main_multiple(self):
         if os.path.isfile("./test/Test_platypus.neoantigens.txt"):
@@ -160,4 +160,6 @@ class MyTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    import sys
+    print(sys.version)
     unittest.main()

@@ -33,6 +33,7 @@ def Parser():
     requiredNamed.add_argument("-i", '--neopred_in', dest="neoPredIn", default=None, type=str,help="Input neoantigen predictions, must be unfiltered or filtered on binding affinity. Example: -I ./AllSamples.neoantigens.txt")
     requiredNamed.add_argument("-f", '--fastas', dest="fastaDir", default="/Users/schencro/Desktop/ChandlerTrevAdInCar/NeoPredPipe/fastaFiles/", type=str,help="Fasta files directory associated with the input.")
     Options = parser.parse_args()  # main user args
+    Options.ver41 = False
 
     if not Options.neoPredIn:
         parser.error("Some of the required arguments were not provided. Please check required arguments.")
@@ -85,6 +86,9 @@ def main():
         tmpOut = '%s%s%s/' % (Options.neorecoOut, localpath, tmpFolderName)
 
     netMHCpanPaths = ConfigSectionMap(Config.sections()[1], Config)  # get annovar script paths
+    if netMHCpanPaths['netmhcpan'].rstrip('\n').split('/')[-2]=='netMHCpan-4.1': #set to newer version
+        Options.ver41 = True
+        print("INFO: Processing/analysing files according to the netMHCpan-4.1 output format. If this was not your intention, double-check your netMHCpan path supplied in usr_paths.")
     blastp = ConfigSectionMap(Config.sections()[3], Config)['blastp'] # Get blastp from usr_paths file.
 
     pickleFile = '%s/neorecopo.p'%(tmpOut)

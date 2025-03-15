@@ -92,8 +92,11 @@ class Sample():
         self.peptideFastas = None # Will be a dictionary of tmp files for predictions
         self.epcalls = None
         self.digestedEpitopes = None
+        self.digestedEpitopesIndels = None
         self.appendedEpitopes = None
+        self.appendedEpitopesIndels = None
         self.regionsPresent = None
+        self.regionsPresentIndels = None
         self.ProcessAnnovar(FilePath, annovar, Options)
         if Options.typeII:
             self.hlasnormed = ConstructAlleles_typeII(self.hla, FilePath, self.patID)
@@ -457,7 +460,7 @@ def main():
     annPaths = ConfigSectionMap(Config.sections()[0], Config)  # get annovar script paths
     annPaths['build'] = annPaths['gene_table'].split('/')[-1].split('_')[0] # get build version from name of gene table (hg19/hg38_refGene...)
     annPaths['gene_model'] = annPaths['gene_table'].split('/')[-1].split('_')[1].replace(".txt","") # get gene model from X_somethingGene.txt
-    if annPaths['build'] not in ['hg19', 'hg38', 'hg18']:
+    if annPaths['build'] not in ['hg19', 'hg38', 'hg18', 'mm10']:
         print("WARNING: Unexpected genome build detected in annovar reference files: %s. Please check path for 'gene_table'. Build hg19 is used for analysis."%(annPaths['build']))
         annPaths['build'] = 'hg19'
     else:
